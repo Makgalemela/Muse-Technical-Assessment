@@ -1,0 +1,43 @@
+:host {
+    .container-fluid.mat-top-section {
+        padding: 0;
+        margin: 0;
+        background-color: #350d36;
+        color: white;
+        .mat-base-page {
+            display: flex;
+            margin: 20px;
+            color: #ffffff;
+            justify-content: center !important;
+            text-align: center;
+            padding: 15px;
+        }
+    }
+    .container-fluid.mat-bottom-section {
+        margin-top: 16px;
+        border-bottom: 2px solid #350d36;
+        .container {
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            .mat-button {
+                display: flex;
+                flex-direction: row;
+                flex-grow: 1;
+                .btn {
+                    border-radius: 0px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .container-fluid.mat-bottom-section-data {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+}
+
+* {
+    overflow: hidden;
+}

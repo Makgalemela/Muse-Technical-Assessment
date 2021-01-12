@@ -1,0 +1,45 @@
+<div class="container-fluid mat-top-section">
+    <div class="row justify-content-center">
+        <div class="container">
+            <div class="row mat-base-page">
+                <div class="col-3">
+                    <!-- One of three columns -->
+                </div>
+                <div class="col-6">
+                    <h2>{{ appName }}</h2>
+                </div>
+                <div class="col-3">
+                    <!-- One of three columns -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid mat-bottom-section">
+    <div class="row justify-content-center">
+        <div class="container">
+            <div class="row mat-base-page justify-content-center">
+
+                <div class="col-12 mat-button justify-content-center align-items-center">
+                    <button type="button" class="btn btn-primary btn-lg" routerLink="/home/search">Seacrch</button>
+                    <button type="button" class="btn btn-secondary btn-lg" routerLink="/home/upload">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid mat-bottom-section-data">
+    <div class="row justify-content-center">
+        <div class="container">
+            <div class="row mat-base-page justify-content-center">
+                <div class="col-12 mat-button justify-content-center align-items-center">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
