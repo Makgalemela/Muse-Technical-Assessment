@@ -1,0 +1,12 @@
+:host {
+    .mat-submit {
+        display: flex;
+        justify-content: end;
+        margin-top: 13px;
+        margin-bottom: 12px;
+        .btn {
+            background-color: #4CAF50 !important;
+            border-radius: 0px;
+        }
+    }
+}
