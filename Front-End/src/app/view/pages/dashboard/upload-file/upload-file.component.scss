@@ -7,6 +7,18 @@
         .btn {
             background-color: #4CAF50 !important;
             border-radius: 0px;
+            border: 1px solid transparent;
         }
+    }
+    .mat-control-buttons {
+        display: flex;
+        justify-content: left !important;
+        .btn {
+            margin-right: 12px !important;
+            color: red !important;
+        }
+    }
+    input {
+        padding-bottom: 42px !important;
     }
 }

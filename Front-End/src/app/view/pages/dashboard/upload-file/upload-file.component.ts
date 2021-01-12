@@ -15,9 +15,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadFileComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
+
+  uploaded : boolean = false;
 
   ngOnInit() {
+  }
+
+  uploadfile(file : File){
+      this.uploaded = !this.uploaded
   }
 
 }

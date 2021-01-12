@@ -5,6 +5,10 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material';
 
 const routes: Routes = [
   {
@@ -31,7 +35,12 @@ const routes: Routes = [
     CommonModule,
     CommonModule,
     RouterModule.forChild(routes),
-    MatDividerModule
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule
+    
   ]
 })
 export class DashboardModule { }

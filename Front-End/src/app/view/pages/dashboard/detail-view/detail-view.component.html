@@ -1,1 +1,51 @@
-<p>detail-view works!</p>
+<form class="mat-form-input">
+    <div class="container">
+        <div class="row mat-form-field-custom">
+            <div class="col-5">
+                <!-- <label>Origin</lbel> -->
+                <mat-form-field class="mat-full-width" appearance="outline">
+                    <input type="text" placeholder="Origin" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="col-1 mat-one-col">
+                <h6>to</h6>
+            </div>
+            <div class="col-5">
+                <!-- <label>Destination</label> -->
+                <mat-form-field class="mat-full-width" appearance="outline">
+                    <input type="text" placeholder="Destination" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col mat-result">
+            <h3>{{ origin }}</h3>
+            &nbsp;&nbsp; &nbsp;&nbsp; <span><h3>to</h3></span> &nbsp;&nbsp; &nbsp;&nbsp;
+            <h3>{{ destination }}</h3>
+        </div>
+    </div>
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col mat-result mat-result-calculated">
+            <strong>
+        <h4>
+          {{ distance }}
+        </h4>
+      </strong>
+        </div>
+    </div>
+</div>
