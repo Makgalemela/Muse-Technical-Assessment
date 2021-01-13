@@ -1,10 +1,10 @@
-<form class="mat-form-input">
+<form class="mat-form-input" [formGroup]="form">
     <div class="container">
         <div class="row mat-form-field-custom">
-            <div class="col-5">
+            <div class="col-4">
                 <!-- <label>Origin</lbel> -->
                 <mat-form-field class="mat-full-width" appearance="outline">
-                    <input type="text" placeholder="Origin" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" />
+                    <input type="text" placeholder="Origin" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="origin" />
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                             {{ option }}
@@ -15,10 +15,10 @@
             <div class="col-1 mat-one-col">
                 <h6>to</h6>
             </div>
-            <div class="col-5">
+            <div class="col-4">
                 <!-- <label>Destination</label> -->
                 <mat-form-field class="mat-full-width" appearance="outline">
-                    <input type="text" placeholder="Destination" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" />
+                    <input type="text" placeholder="Destination" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="destination" />
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                             {{ option }}
@@ -26,26 +26,37 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
+            <div class="col-3 mat-search_button">
+                <button type="button" class="btn btn-primary btn-lg" (click)="findShortestPath()">Search</button>
+            </div>
         </div>
     </div>
 </form>
 
-<div class="container">
+<div class="container" *ngIf="results$ | async as calculated ;else loading">
     <div class="row">
         <div class="col mat-result">
-            <h3>{{ origin }}</h3>
+            <h3>{{ calculated.origin }}</h3>
             &nbsp;&nbsp; &nbsp;&nbsp; <span><h3>to</h3></span> &nbsp;&nbsp; &nbsp;&nbsp;
-            <h3>{{ destination }}</h3>
+            <h3>{{ calculated.destination }}</h3>
         </div>
     </div>
-
     <div class="row justify-content-center align-items-center">
         <div class="col mat-result mat-result-calculated">
             <strong>
         <h4>
-          {{ distance }}
+          {{ calculated.distance }}
         </h4>
       </strong>
         </div>
     </div>
 </div>
+<ng-template #loading>
+    <div class="container">
+        <div class="row mat-loading-comp">
+            <h2>
+                Data loading...
+            </h2>
+        </div>
+    </div>
+</ng-template>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { AdministrationComponentService } from 'src/app/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild(RouterOutlet ,{static:false}) outlet: RouterOutlet;
 
-  constructor() { }
-  
-  appName : string ="Shortest Path point to point"
+  constructor() {
+   }
+
   ngOnInit() {
   }
 

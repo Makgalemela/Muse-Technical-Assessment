@@ -7,12 +7,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InterceptService } from './utils/interceptor.service';
+import { AdministrationComponentService } from './utils/administration-component.service';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule
   ],
-  providers :[InterceptService]
+  providers :[InterceptService],
+  entryComponents :[]
 })
 export class CoreModule { }

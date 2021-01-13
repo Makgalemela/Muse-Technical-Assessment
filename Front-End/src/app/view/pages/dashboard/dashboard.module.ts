@@ -1,33 +1,34 @@
-import { Component, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UploadFileComponent } from './upload-file/upload-file.component';
-import { DetailViewComponent } from './detail-view/detail-view.component';
-import { RouterModule, Routes } from '@angular/router';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material';
+import { Component, NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { DashboardComponent } from "./dashboard/dashboard.component";
+import { UploadFileComponent } from "./upload-file/upload-file.component";
+import { DetailViewComponent } from "./detail-view/detail-view.component";
+import { RouterModule, Routes } from "@angular/router";
+import { MatDividerModule } from "@angular/material/divider";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import {
+  MatFormFieldControl,
+  MatFormFieldModule,
+} from "@angular/material/form-field";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatInputModule } from "@angular/material";
 
 const routes: Routes = [
   {
-    path : '',
-    component : DashboardComponent ,
-    children :[
+    path: '',
+    component: DashboardComponent,
+    children: [
       {
-        path : 'search',
-        component : DetailViewComponent
+        path: "search",
+        component: DetailViewComponent,
       },
       {
-        path : 'upload',
-        component : UploadFileComponent
-      }
-    ]
-  }
-  
-]
-
+        path: "upload",
+        component: UploadFileComponent,
+      },
+    ],
+  },
+];
 
 @NgModule({
   declarations: [DashboardComponent, UploadFileComponent, DetailViewComponent],
@@ -39,8 +40,7 @@ const routes: Routes = [
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule
-    
-  ]
+    MatInputModule,
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

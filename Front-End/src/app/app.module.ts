@@ -7,6 +7,7 @@ import { CoreModule } from './core';
 import { DashboardModule } from './view/pages/dashboard';
 import { BaseModule } from './view/pages/base/base.module';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     CoreModule,
     DashboardModule,
     BaseModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,8 +17,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/home', pathMatch: 'full' },
 
       // This temporary redirect when path when the url does not exists.
-      { path: '**', redirectTo: '/home/search', pathMatch: 'full' },
-
+      //  { path: '**', redirectTo: '/home/search', pathMatch: 'full' },
      ]
   }
 ];
