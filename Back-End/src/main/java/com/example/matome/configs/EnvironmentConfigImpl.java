@@ -1,7 +1,7 @@
 package com.example.matome.configs;
 
 
-import io.lettuce.core.dynamic.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component

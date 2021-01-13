@@ -25,6 +25,6 @@ public class fileController {
 
     @PostMapping(value= UPLOAD_FILE ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> getSoftwareDetail(@RequestParam("file") MultipartFile file ,  @RequestParam("fileName") String fileName) throws Exception {
-        return saveFileService.saveFile(file);
+        return saveFileService.saveFile(file,fileName);
     }
 }
