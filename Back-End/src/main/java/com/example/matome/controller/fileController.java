@@ -23,8 +23,8 @@ public class fileController {
     SaveFileService saveFileService;
 
 
-    @PostMapping(value= UPLOAD_FILE ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> getSoftwareDetail(@RequestParam("file") MultipartFile file ,  @RequestParam("fileName") String fileName) throws Exception {
+    @PostMapping(value= UPLOAD_FILE ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE ,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file ,  @RequestParam("fileName") String fileName) throws Exception {
         return saveFileService.saveFile(file,fileName);
     }
 }

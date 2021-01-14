@@ -30,7 +30,7 @@ public class ProcessFileService {
         return  file;
     }
 
-    @Scheduled(fixedDelay = 5L)
+//    @Scheduled(fixedDelay = 5L)
     public void processFile(){
         uploadFilesRepository.findByProcessStatus("pending").forEach(pendingFile->{
             try {

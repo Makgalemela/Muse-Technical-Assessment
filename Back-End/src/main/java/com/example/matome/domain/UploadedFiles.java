@@ -19,15 +19,6 @@ public class UploadedFiles {
     private String processStatus;
 
 
-//    @ApiModelProperty(hidden = true)
-    @CreationTimestamp
-    private Date createdOn;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-//    @ApiModelProperty(hidden = true)
-    private Date updatedOn = new Date();
-
 
     public Long getId() {
         return Id;
@@ -53,19 +44,5 @@ public class UploadedFiles {
         this.processStatus = processStatus;
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
-    }
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
 }
