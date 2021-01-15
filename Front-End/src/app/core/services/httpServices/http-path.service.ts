@@ -13,7 +13,7 @@ import { environment } from "../../../../environments/environment";
 
 const API_FILE_UPLOAD_URL = environment.baseUrl + "/upload";
 const API_FIND_SHORTEST_PATH_URL = environment.baseUrl + "/path/shortest";
-const API_FIND_END_PATH_URL = environment.baseUrl + "/path/ends";
+const API_FIND_END_PATH_URL = environment.baseUrl + "/path/points";
 
 
 @Injectable({
