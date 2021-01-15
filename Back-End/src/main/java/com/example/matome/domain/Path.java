@@ -13,9 +13,9 @@ public class Path {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long routerId;
-    private String origin;
-    private String destination;
-    private String trafficDelay;
+    private Integer origin;
+    private Integer destination;
+    private Double trafficDelay;
 
 
     public Long getRouterId() {
@@ -26,27 +26,27 @@ public class Path {
         this.routerId = routerId;
     }
 
-    public String getOrigin() {
+    public Integer getOrigin() {
         return origin;
     }
 
-    public void setOrigin(String origin) {
+    public void setOrigin(Integer origin) {
         this.origin = origin;
     }
 
-    public String getDestination() {
+    public Integer getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Integer destination) {
         this.destination = destination;
     }
 
-    public String getTrafficDelay() {
+    public Double getTrafficDelay() {
         return trafficDelay;
     }
 
-    public void setTrafficDelay(String traficDelay) {
-        this.trafficDelay = traficDelay;
+    public void setTrafficDelay(Double trafficDelay) {
+        this.trafficDelay = trafficDelay;
     }
 }

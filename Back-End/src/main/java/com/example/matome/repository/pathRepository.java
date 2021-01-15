@@ -9,4 +9,5 @@ public interface pathRepository  extends JpaRepository<Path, Long> {
     Path findByDestination(String destination);
     Path findByOrigin(String Origin);
     Path findByTrafficDelay(String trafficDelay);
+    Path findByOriginAndDestination(Integer origin, Integer Destination);
 }
