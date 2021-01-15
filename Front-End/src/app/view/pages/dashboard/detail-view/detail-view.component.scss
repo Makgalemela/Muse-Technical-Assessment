@@ -46,3 +46,24 @@
         color: #350d36 !important;
     }
 }
+
+table {
+    width: 100%;
+    cursor: pointer;
+}
+
+.mat-result-calculated {
+    width: 100%;
+    margin-bottom: 12px;
+    button {
+        width: 100%;
+        border-radius: 0px;
+        border: 1px solid transparent;
+        background-color: #4CAF50;
+        color: #FFFFFF;
+        &:focus {
+            border: 1px solid transparent;
+            outline: transparent;
+        }
+    }
+}

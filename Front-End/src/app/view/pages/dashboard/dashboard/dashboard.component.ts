@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   constructor() {
    }
 
+   appName : String = "Shortest Path From Point to Point"
   ngOnInit() {
   }
 

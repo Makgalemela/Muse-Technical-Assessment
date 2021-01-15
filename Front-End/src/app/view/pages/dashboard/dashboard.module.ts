@@ -11,7 +11,7 @@ import {
   MatFormFieldModule,
 } from "@angular/material/form-field";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatInputModule } from "@angular/material";
+import { MatButtonModule, MatInputModule, MatTableModule } from "@angular/material";
 
 const routes: Routes = [
   {
@@ -41,6 +41,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     MatInputModule,
+    MatTableModule,
+    MatButtonModule
   ],
 })
 export class DashboardModule {}

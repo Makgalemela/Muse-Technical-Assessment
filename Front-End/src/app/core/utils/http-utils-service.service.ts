@@ -10,13 +10,10 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment'
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class HttpUtilsServiceService {
 
   constructor() { }
-
 
   getHTTPHeaders(): HttpHeaders {
 		let token = localStorage.getItem(environment.authTokenKey);
