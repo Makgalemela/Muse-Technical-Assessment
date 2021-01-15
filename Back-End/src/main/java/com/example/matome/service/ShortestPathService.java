@@ -5,6 +5,7 @@ import com.example.matome.domain.Path;
 import com.example.matome.domain.SourceIndex;
 import com.example.matome.dto.searchRequest;
 import com.example.matome.dto.searchResponse;
+import com.example.matome.dto.trafficDistance;
 import com.example.matome.repository.SourceIndexRepository;
 import com.example.matome.repository.pathRepository;
 import com.example.matome.utils.ResponseHandler;
@@ -29,6 +30,8 @@ public class ShortestPathService {
     int path [];
     Double distance = 0.0;
     List<String> journey = new ArrayList<>();
+    private List<trafficDistance> originToDestination = new ArrayList<>();
+
 
 
     @Autowired
@@ -56,15 +59,15 @@ public class ShortestPathService {
         });
     }
 
-    private void breathFirstSearch(searchRequest req){
+    private void breathFirstSearch(SourceIndex source_ , SourceIndex des_){
         journey.clear();
         distance = 0.0;
 
         boolean visited[] = new boolean[numberOfVertices];
         LinkedList<Integer> queue = new LinkedList<Integer>();
 
-        Integer source = sourceIndexRepository.findBySource(req.getOrigin()).getIndex();
-        Integer des = sourceIndexRepository.findBySource(req.getDestination()).getIndex();
+        Integer source = source_.getIndex();
+        Integer des = des_.getIndex();
         visited[source]=true;
         queue.add(source);
         while (queue.size() != 0){
@@ -90,14 +93,25 @@ public class ShortestPathService {
 
     public ResponseEntity<Object> findShortestPath(searchRequest req){
 
-        searchResponse res = new searchResponse();
-        init();
-        addEdges();
-        res.setDestination(req.getDestination());
-        res.setOrigin(req.getOrigin());
-        breathFirstSearch(req);
-        req.setDistance(String.valueOf(distance));
-        return ResponseHandler.generateResponse(HttpStatus.OK, true, "Successfully Calculated", req);
+        SourceIndex source = sourceIndexRepository.findBySource(req.getOrigin());
+        SourceIndex des = sourceIndexRepository.findBySource(req.getDestination());
+
+        if(Objects.isNull(source) || Objects.isNull(des)){
+            return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, true, "Path Does not exsit", null);
+        }
+        else{
+            searchResponse res = new searchResponse();
+            init();
+            addEdges();
+            res.setDestination(req.getDestination());
+            res.setOrigin(req.getOrigin());
+            breathFirstSearch(source,des);
+            res.setDistance(String.valueOf(distance));
+            res.setPath(originToDestination);
+
+            return ResponseHandler.generateResponse(HttpStatus.OK, true, "Successfully Calculated", res);
+        }
+
 
     }
 
@@ -114,10 +128,16 @@ public class ShortestPathService {
 
         int size = journey.size();
         for(int itr = 0 ; itr < size-1 ; itr++ ){
-            Integer src = sourceIndexRepository.findBySource(journey.get(itr)).getIndex();
-            Integer dest = sourceIndexRepository.findBySource(journey.get(itr+1)).getIndex();
-            distance += pathRepository.findByOriginAndDestination(src, dest).getTrafficDelay();
+            trafficDistance _path = new trafficDistance();
 
+            SourceIndex src = sourceIndexRepository.findBySource(journey.get(itr));
+            SourceIndex dest = sourceIndexRepository.findBySource(journey.get(itr+1));
+            double shortDistance =  pathRepository.findByOriginAndDestination(src.getIndex(), dest.getIndex()).getTrafficDelay();
+            distance += shortDistance;
+            _path.setFrom(src.getSource());
+            _path.setTo(dest.getSource());
+            _path.setDistance(String.valueOf(shortDistance));
+            originToDestination.add(_path);
         }
         logger.info("journey" + journey + " "+distance);
     }

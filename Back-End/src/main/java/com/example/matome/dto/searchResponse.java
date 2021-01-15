@@ -1,14 +1,13 @@
 package com.example.matome.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class searchResponse {
-    private  String origin;
+    private String origin;
     private String destination;
     private String distance;
-    private List<String> path = null;
-
-    public searchResponse() { }
+    private List<trafficDistance> path = new ArrayList<>();
 
     public String getOrigin() {
         return origin;
@@ -34,11 +33,11 @@ public class searchResponse {
         this.distance = distance;
     }
 
-    public List<String> getPath() {
+    public List<trafficDistance> getPath() {
         return path;
     }
 
-    public void setPath(List<String> path) {
+    public void setPath(List<trafficDistance> path) {
         this.path = path;
     }
 }

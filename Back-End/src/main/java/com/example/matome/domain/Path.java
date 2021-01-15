@@ -16,7 +16,15 @@ public class Path {
     private Integer origin;
     private Integer destination;
     private Double trafficDelay;
+    private  Double distance;
 
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
 
     public Long getRouterId() {
         return routerId;

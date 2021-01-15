@@ -13,7 +13,15 @@ public class SourceIndex {
     @GenericGenerator(name = "native", strategy = "native")
     private Integer index;
     private String source;
+    private String CountryName;
 
+    public String getCountryName() {
+        return CountryName;
+    }
+
+    public void setCountryName(String countryName) {
+        CountryName = countryName;
+    }
 
     public Integer getIndex() {
         return index;
