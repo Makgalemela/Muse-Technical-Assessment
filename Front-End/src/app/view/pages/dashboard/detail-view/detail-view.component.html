@@ -20,7 +20,7 @@
                 <mat-form-field class="mat-full-width" appearance="outline">
                     <input type="text" placeholder="Destination" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="destination" />
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of  destinationFilter$ | async" [value]="option">
+                        <mat-option *ngFor="let option of destinationFilter$ | async" [value]="option">
                             {{ option }}
                         </mat-option>
                     </mat-autocomplete>

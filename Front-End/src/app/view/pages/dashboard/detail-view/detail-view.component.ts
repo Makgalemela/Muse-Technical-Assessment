@@ -37,7 +37,7 @@ export class DetailViewComponent implements OnInit {
     this.httpServive.getEndPoints({}).subscribe((sites) => {
       let data: any[] = sites.data;
       data.forEach((elem) => {
-        this.options.push(elem.countryName);
+        this.options.push(elem.planetName);
       });
     });
 
@@ -63,7 +63,6 @@ export class DetailViewComponent implements OnInit {
 
   findShortestPath() {
     this.results$.next(false);
-    console.log(this.form.value)
     this.httpServive.shortestPath(this.form.value).subscribe((res) => {
       this.results$.next(res.data);
       let tableData: ResultSet[] = [];
