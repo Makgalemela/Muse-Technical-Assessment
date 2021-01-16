@@ -42,12 +42,12 @@ export class DetailViewComponent implements OnInit {
     });
 
     this.originFilter$ = this.form.get("origin").valueChanges.pipe(
-      startWith(""),
+      startWith(" "),
       map((value) => this._filter(value))
     );
 
     this.destinationFilter$ = this.form.get("destination").valueChanges.pipe(
-      startWith(""),
+      startWith(" "),
       map((value) => this._filter(value))
     );
   }
@@ -63,6 +63,7 @@ export class DetailViewComponent implements OnInit {
 
   findShortestPath() {
     this.results$.next(false);
+    console.log(this.form.value)
     this.httpServive.shortestPath(this.form.value).subscribe((res) => {
       this.results$.next(res.data);
       let tableData: ResultSet[] = [];
