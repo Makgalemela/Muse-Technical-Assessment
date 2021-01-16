@@ -88,8 +88,8 @@ public class ProcessFileService {
      * @return
      */
     private  boolean checkIfPathIsSaveExcel(XSSFRow row){
-        PlanetName planetName1 = planetNameRepository.findBySource(row.getCell(1).getStringCellValue());
-        PlanetName planetName2 = planetNameRepository.findBySource(row.getCell(2).getStringCellValue());
+        PlanetName planetName1 = planetNameRepository.findByNodeName(row.getCell(1).getStringCellValue());
+        PlanetName planetName2 = planetNameRepository.findByNodeName(row.getCell(2).getStringCellValue());
         if(Objects.isNull(planetName1) || Objects.isNull(planetName2)){
             return  false;
         }
@@ -109,19 +109,19 @@ public class ProcessFileService {
      */
 
     private void processPlanetNames(XSSFSheet worksheet){
-        List<PlanetName> sourceIndices = new ArrayList<>();
+        List<PlanetName> NodeNameIndices = new ArrayList<>();
         for(int itr=1;itr<worksheet.getPhysicalNumberOfRows() ;itr++) {
             PlanetName planetName = new PlanetName();
             XSSFRow row = worksheet.getRow(itr);
-            PlanetName src = planetNameRepository.findBySource(row.getCell(0).getStringCellValue());
+            PlanetName src = planetNameRepository.findByNodeName(row.getCell(0).getStringCellValue());
             if(Objects.isNull(src)) {
-                planetName.setSource(row.getCell(0).getStringCellValue());
+                planetName.setNodeName(row.getCell(0).getStringCellValue());
                 planetName.setPlanetName(row.getCell(1).getStringCellValue());
-                sourceIndices.add(planetName);
+                NodeNameIndices.add(planetName);
             }
         }
-        if(sourceIndices.size() >0){
-            planetNameRepository.saveAll(sourceIndices);
+        if(NodeNameIndices.size() >0){
+            planetNameRepository.saveAll(NodeNameIndices);
         }
     }
 
@@ -147,8 +147,8 @@ public class ProcessFileService {
 
                 String origin = row.getCell(1).getStringCellValue();
                 String destination = row.getCell(2).getStringCellValue();
-                    PlanetName src = planetNameRepository.findBySource(origin);
-                    PlanetName des = planetNameRepository.findBySource(destination);
+                    PlanetName src = planetNameRepository.findByNodeName(origin);
+                    PlanetName des = planetNameRepository.findByNodeName(destination);
                      path.setOrigin(src.getIndex());
                      path.setDestination(des.getIndex());
                     path.setDistance(row.getCell(3).getNumericCellValue());

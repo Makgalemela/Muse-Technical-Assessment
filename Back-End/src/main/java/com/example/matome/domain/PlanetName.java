@@ -12,15 +12,15 @@ public class PlanetName {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Integer index;
-    private String source;
+    private String nodeName;
     private String planetName;
 
     public String getPlanetName() {
         return planetName;
     }
 
-    public void setPlanetName(String PlanetName) {
-        PlanetName = PlanetName;
+    public void setPlanetName(String planetName) {
+        this.planetName = planetName;
     }
 
     public Integer getIndex() {
@@ -31,11 +31,11 @@ public class PlanetName {
        this.index = index;
     }
 
-    public String getSource() {
-        return source;
+    public String getNodeName() {
+        return nodeName;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 }

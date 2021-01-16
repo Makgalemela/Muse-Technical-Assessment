@@ -182,17 +182,17 @@ public class DijkstrasAlgorithm {
      * @return
      */
     public ResponseEntity<Object> findShortestPath(searchRequest req){
-        PlanetName source = planetNameRepository.findByPlanetName(req.getOrigin());
+        PlanetName NodeName = planetNameRepository.findByPlanetName(req.getOrigin());
         PlanetName des = planetNameRepository.findByPlanetName(req.getDestination());
 
-        if(Objects.isNull(source) || Objects.isNull(des)){
+        if(Objects.isNull(NodeName) || Objects.isNull(des)){
             return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, true, "Path Does not exist", null);
         }else {
             searchResponse res = new searchResponse();
             init();
-            dijkstra(source.getIndex());
+            dijkstra(NodeName.getIndex());
             computePath(des.getIndex(), parents);
-            res.setOrigin(source.getPlanetName());
+            res.setOrigin(NodeName.getPlanetName());
             res.setDestination(des.getPlanetName());
             res.setDistance(String.valueOf(shortestDistances[des.getIndex()]));
             res.setPath(desiredShortestPath);
