@@ -71,25 +71,22 @@
         </table>
 
     </div>
-    <!-- <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-center align-items-center">
         <div class="col mat-result mat-result-calculated">
-
-            <button mat-flat-button>
-                Click here to see the Path to the from Orgin to Destination
-            </button>
-
-
+            <mat-card>
+                <ng-container *ngFor="let item of calculated.path; let i = index">
+                    {{item}}
+                    <ng-container *ngIf=" i !== calculated.path.length-1">
+                        <strong>
+                        <span>
+                            &nbsp; -> &nbsp;
+                        </span>
+                       </strong>
+                    </ng-container>
+                </ng-container>
+            </mat-card>
         </div>
-
-        <div class="col mat-result">
-
-            <button mat-flat-button>
-                Click here to see the Path to the from Orgin to Destination
-            </button>
-
-
-        </div>
-    </div> -->
+    </div>
 </div>
 <ng-template #loading>
     <div class="container">
