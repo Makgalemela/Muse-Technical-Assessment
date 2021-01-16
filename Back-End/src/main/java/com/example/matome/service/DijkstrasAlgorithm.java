@@ -155,7 +155,7 @@ public class DijkstrasAlgorithm {
                     shortestDistance = shortestDistances[itr2];
                 }
             }
-            
+
             //Keep track of all nodes which have been visited and added to the shortest path tree.
 
             added[nearestVertex] = true;
@@ -204,7 +204,13 @@ public class DijkstrasAlgorithm {
         PlanetName des = planetNameRepository.findByPlanetName(req.getDestination());
 
         if(Objects.isNull(ori) || Objects.isNull(des)){
-            return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, false, "Path Does not exist", null);
+            String message = null;
+            if(planetNameRepository.findAll().size() == 0){
+                message = "Please upload the document that contain paths.";
+            }else{
+                message = "The path you are looking for does not exist";
+            }
+            return ResponseHandler.generateResponse(HttpStatus.OK, false, message, null);
         }else {
             searchResponse res = new searchResponse();
             init(req.getTrafficInfo());

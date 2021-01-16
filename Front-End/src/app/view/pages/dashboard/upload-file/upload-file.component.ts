@@ -7,6 +7,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { HttpPathService } from 'src/app/core';
 
 @Component({
@@ -22,15 +23,20 @@ export class UploadFileComponent implements OnInit {
 
   uploaded : boolean = false;
 
+  response$ : BehaviorSubject<String> = new BehaviorSubject<String>("")
+
   ngOnInit() {}
   uploadfile(){
+    if(this.uploaded){
+      this.uploaded = false;
+    }
     const formData: FormData = new FormData();
     formData.append('file',  this.fileToUpload);
     formData.append('fileName',  this.fileToUpload.name);
     this.httpServive.uploadFile(formData)
     .subscribe((res)=>{
         this.uploaded = !this.uploaded;
-        console.log(res)
+        this.response$.next(res.message)
     })
   }
   handleFileInput(files: FileList) {

@@ -1,6 +1,14 @@
+
+/**
+ * 
+ *  Authour : M  Makgalemela
+ *  Date : 12/01/2021
+ * 
+ */
+
+// Angular
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AdministrationComponentService } from 'src/app/core';
 
 @Component({
   selector: 'app-dashboard',

@@ -17,10 +17,4 @@ export class SearchFormService {
       origin : '',
       destination : ''
     })}
-
-
-    setTrafficInfo(info : any){
-      this.emailForm.controls["trafficInfo"].patchValue(info);
-    }
-
 }

@@ -1,3 +1,11 @@
+/**
+ * 
+ *  Authour : M  Makgalemela
+ *  Date : 12/01/2021
+ * 
+ */
+
+// Angular
 import { Component, OnInit } from '@angular/core';
 
 @Component({

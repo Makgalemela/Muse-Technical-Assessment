@@ -1,7 +1,17 @@
+
+/**
+ * 
+ *  Authour : M  Makgalemela
+ *  Date : 12/01/2021
+ * 
+ */
+
+// Angular
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, FormsModule } from "@angular/forms";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
+import { of } from "rxjs/internal/observable/of";
 import { map, startWith } from "rxjs/operators";
 import { HttpPathService, SearchFormService } from "src/app/core";
 
@@ -30,9 +40,11 @@ export class DetailViewComponent implements OnInit {
   ) {}
 
   form: FormGroup = this.Forms.emailForm;
-  originFilter$: Observable<any>;
-  destinationFilter$: Observable<any>;
+
+  searchFilter$: Observable<any>;
+
   results$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
+  errorResults$ : BehaviorSubject<any> = new BehaviorSubject<any>("Results Loading..")
   displayedColumns: string[] = ["Origin", "Destination", "Distance"];
 
   ngOnInit() {
@@ -40,18 +52,18 @@ export class DetailViewComponent implements OnInit {
       let data: any[] = sites.data;
       data.forEach((elem) => {
         this.options.push(elem.planetName);
+        this.searchFilter$ = of(this.options)
       });
     });
 
-    this.originFilter$ = this.form.get("origin").valueChanges.pipe(
-      startWith(" "),
-      map((value) => this._filter(value))
-    );
 
-    this.destinationFilter$ = this.form.get("destination").valueChanges.pipe(
-      startWith(" "),
-      map((value) => this._filter(value))
-    );
+    this.form.get("destination").valueChanges.subscribe(word=>{
+       this.searchFilter$  =  of(this._filter(word))
+    })
+
+    this.form.get("origin").valueChanges.subscribe(word=>{
+      this.searchFilter$  = of(this._filter(word));
+    });
   }
 
   private _filter(value: string): string[] {
@@ -64,19 +76,22 @@ export class DetailViewComponent implements OnInit {
   dataSource = new MatTableDataSource<ResultSet>();
 
   findShortestPath() {
-    this.Forms.setTrafficInfo(this.checked)
     this.results$.next(false);
     console.log(this.form.value)
     this.httpServive.shortestPath(this.form.value).subscribe((res) => {
-      this.results$.next(res.data);
-      let tableData: ResultSet[] = [];
-      let row: ResultSet = {
-        Destination: res.data.destination,
-        Distance: res.data.distance,
-        Origin: res.data.origin,
-      };
-      tableData.push(row);
-      this.dataSource = new MatTableDataSource<ResultSet>(tableData);
+      if(res.isSuccess){
+        this.results$.next(res.data);
+        let tableData: ResultSet[] = [];
+        let row: ResultSet = {
+          Destination: res.data.destination,
+          Distance: res.data.distance,
+          Origin: res.data.origin,
+        };
+        tableData.push(row);
+        this.dataSource = new MatTableDataSource<ResultSet>(tableData);
+      }else{
+        this.errorResults$.next(res.message)
+      }
     });
   }
 }

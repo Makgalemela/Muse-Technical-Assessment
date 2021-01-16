@@ -3,10 +3,10 @@
         <div class="row mat-form-field-custom justify-content-center align-content-center">
             <div class="col-4">
                 <mat-form-field class="mat-full-width" appearance="outline">
-                    <input type="text" placeholder="Origin" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="origin" />
+                    <input type="text" placeholder="Origin" matInput [matAutocomplete]="auto" formControlName="origin" />
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of originFilter$ | async" [value]="option">
-                            {{ option.source }}
+                        <mat-option *ngFor="let option of searchFilter$ | async" [value]="option">
+                            {{ option }}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
@@ -16,9 +16,9 @@
             </div>
             <div class="col-4">
                 <mat-form-field class="mat-full-width" appearance="outline">
-                    <input type="text" placeholder="Destination" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="destination" />
+                    <input type="text" placeholder="Destination" matInput [matAutocomplete]="auto" formControlName="destination" />
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of destinationFilter$ | async" [value]="option">
+                        <mat-option *ngFor="let option of searchFilter$ | async" [value]="option">
                             {{ option }}
                         </mat-option>
                     </mat-autocomplete>
@@ -33,9 +33,11 @@
 <div class="container">
     <div class="row mat-checkbox-custom">
         <div class="col">
-            <mat-checkbox [(ngModel)]="checked">
-                With traffic Delay
-            </mat-checkbox>
+            <form class="mat-form-inputs" [formGroup]="form">
+                <mat-checkbox formControlName="trafficInfo">
+                    With traffic Delay
+                </mat-checkbox>
+            </form>
         </div>
     </div>
 </div>
@@ -104,7 +106,9 @@
     <div class="container">
         <div class="row mat-loading-comp">
             <h2>
-                Data loading...
+                <ng-container>
+                    {{errorResults$ | async}}
+                </ng-container>
             </h2>
         </div>
     </div>

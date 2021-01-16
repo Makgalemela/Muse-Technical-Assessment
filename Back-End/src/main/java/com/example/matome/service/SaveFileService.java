@@ -56,7 +56,7 @@ public class SaveFileService {
         fileMETA.setFileName(fileName);
         fileMETA = repository.save(fileMETA);
         logger.info("file uploaded :: "+ fileMETA.getFileName() + " " +fileMETA.getId());
-        return ResponseHandler.generateResponse(HttpStatus.OK, true, "File Successfully uploaded pending processing", fileName);
+        return ResponseHandler.generateResponse(HttpStatus.OK, true, "File Successfully uploaded pending processing."+ '\n'+"This will take a second.", fileName);
     }
 
     public ResponseEntity<Object> getSavedPaths() {
