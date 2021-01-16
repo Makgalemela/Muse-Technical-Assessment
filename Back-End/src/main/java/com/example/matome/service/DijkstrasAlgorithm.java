@@ -186,7 +186,7 @@ public class DijkstrasAlgorithm {
         PlanetName des = planetNameRepository.findByPlanetName(req.getDestination());
 
         if(Objects.isNull(NodeName) || Objects.isNull(des)){
-            return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, true, "Path Does not exist", null);
+            return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, false, "Path Does not exist", null);
         }else {
             searchResponse res = new searchResponse();
             init();
@@ -196,7 +196,7 @@ public class DijkstrasAlgorithm {
             res.setDestination(des.getPlanetName());
             res.setDistance(String.valueOf(shortestDistances[des.getIndex()]));
             res.setPath(desiredShortestPath);
-            return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, true, "Successfully Found the path", res);
+            return ResponseHandler.generateResponse(HttpStatus.OK, true, "Successfully Found the path", res);
 
         }
     }
