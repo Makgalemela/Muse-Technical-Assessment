@@ -35,6 +35,14 @@ public class SaveFileService {
     @Autowired
     PlanetNameRepository planetNameRepository;
 
+    /**
+     *
+     * First we create directory called ma2me == Matome
+     * @param file
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
     public ResponseEntity<Object> saveFile(MultipartFile file, String fileName) throws IOException {
         byte[] bytes = file.getBytes();
         String filePath = environmentConfig.getFileDirectory().concat("/ma2me/");
@@ -50,7 +58,6 @@ public class SaveFileService {
         logger.info("file uploaded :: "+ fileMETA.getFileName() + " " +fileMETA.getId());
         return ResponseHandler.generateResponse(HttpStatus.OK, true, "File Successfully uploaded pending processing", fileName);
     }
-
 
     public ResponseEntity<Object> getSavedPaths() {
         List<PlanetName> paths = planetNameRepository.findAll();

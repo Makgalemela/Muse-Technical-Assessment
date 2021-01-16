@@ -18,6 +18,8 @@ export interface ResultSet {
 })
 export class DetailViewComponent implements OnInit {
   options: string[] = [];
+  checked = false;
+
 
   origin: String = "Johannesburg";
   destination: String = "Cape Town";
@@ -62,7 +64,9 @@ export class DetailViewComponent implements OnInit {
   dataSource = new MatTableDataSource<ResultSet>();
 
   findShortestPath() {
+    this.Forms.setTrafficInfo(this.checked)
     this.results$.next(false);
+    console.log(this.form.value)
     this.httpServive.shortestPath(this.form.value).subscribe((res) => {
       this.results$.next(res.data);
       let tableData: ResultSet[] = [];

@@ -1,0 +1,15 @@
+Design Assumptions:
+1.	The Data in the excel files is always correct and in the right format as such the application might fail if the data is not well formatted.
+2.	When the traffic delay is accounted for, the distance between to point is increased by traffic delay.
+Development Approach:
+1.	Build on spring-boot, JPA.
+2.	Implemented algorithm is Dijkstra greedy algorithm.
+3.	The algorithm is applied on the undirected graph, this means the graph can be traversed in both directions.
+4.	Two tables are created, the other tables, contain references which is just node names and planets names as well their entity Id. 
+5.	Another table is constructed to describe distance between two nodes as well as the traffic delay.
+6.	Origin and destination are represented as integers this become useful for construction of the graph. 
+Front-End:
+1.	Front end is build using angular framework and scss styling.
+
+Running the application:
+

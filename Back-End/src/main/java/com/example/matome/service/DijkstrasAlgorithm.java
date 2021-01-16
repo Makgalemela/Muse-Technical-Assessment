@@ -66,7 +66,7 @@ public class DijkstrasAlgorithm {
      */
 
 
-    private void init(){
+    private void init(boolean withDelay){
             desiredShortestPath = new ArrayList<>();
             List<PlanetName> planetNameList = planetNameRepository.findAll();
             int dimensions = planetNameList.size()+1;
@@ -99,7 +99,23 @@ public class DijkstrasAlgorithm {
             Path path = paths.get(itr);
             Double distance = pathRepository.findByOriginAndDestination(path.getOrigin(),path.getDestination())
                     .getDistance();
-            graph[path.getOrigin()][path.getDestination()] = distance;
+            Double trafficDelay = pathRepository.findByOriginAndDestination(path.getOrigin(),path.getDestination())
+                    .getTrafficDelay();
+
+            /**
+             * This build undirected graph.
+             * The assumption is that the graph distance between node in longer when there is
+             * traffic delay.
+             */
+            if(withDelay){
+                graph[path.getOrigin()][path.getDestination()] = distance+trafficDelay;
+                graph[path.getDestination()][path.getOrigin()] = distance+trafficDelay;
+            }else{
+                graph[path.getDestination()][path.getOrigin()] = distance;
+                graph[path.getOrigin()][path.getDestination()] = distance;
+
+            }
+
         }
 
 
@@ -111,6 +127,8 @@ public class DijkstrasAlgorithm {
             shortestDistances[itr] = Double.MAX_VALUE;
             added[itr] = false;
         }
+
+        logger.info("Finished initialisation");
 
     }
 
@@ -137,9 +155,9 @@ public class DijkstrasAlgorithm {
                     shortestDistance = shortestDistances[itr2];
                 }
             }
-
-
+            
             //Keep track of all nodes which have been visited and added to the shortest path tree.
+
             added[nearestVertex] = true;
 
             for (int itr2 = 0; itr2 < vertices; itr2++)
@@ -182,17 +200,17 @@ public class DijkstrasAlgorithm {
      * @return
      */
     public ResponseEntity<Object> findShortestPath(searchRequest req){
-        PlanetName NodeName = planetNameRepository.findByPlanetName(req.getOrigin());
+        PlanetName ori = planetNameRepository.findByPlanetName(req.getOrigin());
         PlanetName des = planetNameRepository.findByPlanetName(req.getDestination());
 
-        if(Objects.isNull(NodeName) || Objects.isNull(des)){
+        if(Objects.isNull(ori) || Objects.isNull(des)){
             return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, false, "Path Does not exist", null);
         }else {
             searchResponse res = new searchResponse();
-            init();
-            dijkstra(NodeName.getIndex());
+            init(req.getTrafficInfo());
+            dijkstra(ori.getIndex());
             computePath(des.getIndex(), parents);
-            res.setOrigin(NodeName.getPlanetName());
+            res.setOrigin(ori.getPlanetName());
             res.setDestination(des.getPlanetName());
             res.setDistance(String.valueOf(shortestDistances[des.getIndex()]));
             res.setPath(desiredShortestPath);

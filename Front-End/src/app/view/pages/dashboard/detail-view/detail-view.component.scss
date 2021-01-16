@@ -1,21 +1,50 @@
 .mat-form-input {
     min-width: 150px;
-    max-width: 500px;
     width: 100%;
     background-color: #350d36;
     color: white;
     padding-top: 15px;
     margin-bottom: 12px;
+    padding-left: 14px;
+    padding-right: 14px;
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+    flex-direction: row;
+    flex-grow: 1;
     .mat-full-width {
         width: 100%;
     }
 }
 
-.mat-form-field-custom {
+.mat-checkbox-custom {
+    background-color: #350d36;
+    color: #ffffff;
+    padding-top: 15px;
+    align-self: start;
+    width: 100%;
+}
+
+.container {
     display: flex;
     justify-content: center;
-    flex-direction: row;
-    flex-grow: 1;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+.mat-form-field-custom {
+    width: 100%;
+    // border-bottom: 2px solid #ffffff;
+}
+
+.mat-card-title {
+    border-bottom: 1px solid #ffffff;
 }
 
 .mat-one-col {
@@ -27,7 +56,7 @@
         margin-top: 5px;
         padding-bottom: 12px;
         background-color: #4CAF50;
-        border: 1px solid transparent;
+        border: 1px solid transparent !important;
     }
 }
 
@@ -50,6 +79,15 @@
 table {
     width: 100%;
     cursor: pointer;
+}
+
+.mat-form-field-checkBox {
+    border-top: 1px solid #ffffff;
+    width: 100%;
+}
+
+.mat-card {
+    border-radius: 0px;
 }
 
 .mat-result-calculated {

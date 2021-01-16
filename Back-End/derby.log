@@ -1,15 +1,8 @@
 ----------------------------------------------------------------
-<<<<<<< HEAD
-Sat Jan 16 03:50:10 CAT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0177-08e2-a31c-00001246a200 
-on database directory memory:C:\Users\schroodinger\Desktop\MuseTechNicalAssesment\Back-End\ma2me with class loader org.springframework.boot.loader.LaunchedURLClassLoader@1b604f19 
-Loaded from jar:file:/C:/Users/schroodinger/Desktop/MuseTechNicalAssesment/Back-End/target/matome-0.0.1-SNAPSHOT.jar!/BOOT-INF/lib/derby-10.14.2.0.jar!/
-=======
-Sat Jan 16 03:49:23 CAT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0177-08e1-e312-00000a667da0 
+Sat Jan 16 06:34:20 CAT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0177-0978-fb1b-0000090b5a30 
 on database directory memory:C:\Users\schroodinger\Desktop\MuseTechNicalAssesment\Back-End\ma2me with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2cdf8d8a 
-Loaded from file:/c:/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
->>>>>>> updated-Front-end
+Loaded from file:/C:/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Oracle Corporation
 java.runtime.version=11.0.9+7-LTS
 user.dir=C:\Users\schroodinger\Desktop\MuseTechNicalAssesment\Back-End
@@ -18,3 +11,6 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sat Jan 16 06:36:42 CAT 2021:
+Shutting down instance a816c00e-0177-0978-fb1b-0000090b5a30 on database directory memory:C:\Users\schroodinger\Desktop\MuseTechNicalAssesment\Back-End\ma2me with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2cdf8d8a 

@@ -1,8 +1,7 @@
-<form class="mat-form-input" [formGroup]="form">
-    <div class="container">
-        <div class="row mat-form-field-custom">
+<div class="container">
+    <form class="mat-form-input" [formGroup]="form">
+        <div class="row mat-form-field-custom justify-content-center align-content-center">
             <div class="col-4">
-                <!-- <label>Origin</lbel> -->
                 <mat-form-field class="mat-full-width" appearance="outline">
                     <input type="text" placeholder="Origin" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="origin" />
                     <mat-autocomplete #auto="matAutocomplete">
@@ -16,7 +15,6 @@
                 <h6>to</h6>
             </div>
             <div class="col-4">
-                <!-- <label>Destination</label> -->
                 <mat-form-field class="mat-full-width" appearance="outline">
                     <input type="text" placeholder="Destination" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="destination" />
                     <mat-autocomplete #auto="matAutocomplete">
@@ -30,17 +28,23 @@
                 <button type="button" class="btn btn-primary btn-lg" (click)="findShortestPath()">Search</button>
             </div>
         </div>
+    </form>
+</div>
+<div class="container">
+    <div class="row mat-checkbox-custom">
+        <div class="col">
+            <mat-checkbox [(ngModel)]="checked">
+                With traffic Delay
+            </mat-checkbox>
+        </div>
     </div>
-</form>
+</div>
+
+
+
 
 <div class="container" *ngIf="results$ | async as calculated ;else loading">
-    <div class="row">
-        <!-- <div class="col mat-result">
-            <h3>{{ calculated.origin }}</h3>
-            &nbsp;&nbsp; &nbsp;&nbsp; <span><h3>to</h3></span> &nbsp;&nbsp; &nbsp;&nbsp;
-            <h3>{{ calculated.destination }}</h3>
-        </div> -->
-
+    <div class="row" style="width: 100%;">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
 
             <!--- Note that these columns can be defined in any order.
@@ -64,26 +68,34 @@
                 <td mat-cell *matCellDef="let element"> {{element.Distance}} </td>
             </ng-container>
 
-
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
     </div>
+</div>
+
+
+<div class="container" *ngIf="results$ | async as calculated ">
     <div class="row justify-content-center align-items-center">
         <div class="col mat-result mat-result-calculated">
             <mat-card>
-                <ng-container *ngFor="let item of calculated.path; let i = index">
-                    {{item}}
-                    <ng-container *ngIf=" i !== calculated.path.length-1">
-                        <strong>
-                        <span>
-                            &nbsp; -> &nbsp;
-                        </span>
-                       </strong>
+                <mat-card-title>
+                    Route :
+                </mat-card-title>
+
+                <mat-card-content>
+                    <ng-container *ngFor="let item of calculated.path; let i = index">
+                        {{item}}
+                        <ng-container *ngIf=" i !== calculated.path.length-1">
+                            <strong>
+                            <span>
+                                &nbsp; -> &nbsp;
+                            </span>
+                           </strong>
+                        </ng-container>
                     </ng-container>
-                </ng-container>
+                </mat-card-content>
             </mat-card>
         </div>
     </div>

@@ -8,7 +8,8 @@ export class SearchFormService {
   constructor(private fb: FormBuilder) { }
   emailForm : FormGroup = this.fb.group({
     origin : '',
-    destination : ''
+    destination : '',
+    trafficInfo : ''
   })
 
   resetForm(){
@@ -18,7 +19,8 @@ export class SearchFormService {
     })}
 
 
-    matome(){
-      console.log("Makgalemela")
+    setTrafficInfo(info : any){
+      this.emailForm.controls["trafficInfo"].patchValue(info);
     }
+
 }
