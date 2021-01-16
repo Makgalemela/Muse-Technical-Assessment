@@ -36,7 +36,7 @@ public class fileController {
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file ,  @RequestParam("fileName") String fileName) throws Exception {
         return saveFileService.saveFile(file,fileName);
     }
-    
+
     @GetMapping(value= GET_ALL_PATHS)
     public ResponseEntity<Object> shortestPath() {
         return saveFileService.getSavedPaths();

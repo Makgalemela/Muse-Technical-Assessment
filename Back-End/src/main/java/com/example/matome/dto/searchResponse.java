@@ -7,7 +7,7 @@ public class searchResponse {
     private String origin;
     private String destination;
     private String distance;
-    private List<trafficDistance> path = new ArrayList<>();
+    private List<String> path = new ArrayList<String>();
 
     public String getOrigin() {
         return origin;
@@ -33,11 +33,11 @@ public class searchResponse {
         this.distance = distance;
     }
 
-    public List<trafficDistance> getPath() {
+    public List<String> getPath() {
         return path;
     }
 
-    public void setPath(List<trafficDistance> path) {
+    public void setPath(List<String> path) {
         this.path = path;
     }
 }

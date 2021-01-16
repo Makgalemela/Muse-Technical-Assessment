@@ -22,6 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ *
+ *
+ * The class is used to process files once they have uploaded.
+ * The files are not moved to a new directory once processed and
+ *
+ */
+
 @Service
 public class ProcessFileService {
 
@@ -46,61 +54,12 @@ public class ProcessFileService {
         return  file;
     }
 
-//    @Scheduled(fixedDelay = 5L)
-//    public void processFile(){
-//        uploadFilesRepository.findByProcessStatus("pending").forEach(pendingFile->{
-//            try {
-//                File pending = getFileByName(pendingFile);
-//                BufferedReader reader = new BufferedReader(new FileReader(pending));
-//                String line = null;
-//                int count = 0;
-//                List<Path> paths = new ArrayList<>();
-//                while ((line = reader.readLine()) != null) {
-//                    if (count != 0) {
-//                        String[] data = line.split(";");
-//                        if(checkIfPathExist(data)){
-//                            Path path = new  Path();
-//
-//                            SourceIndex sourceIndex = sourceIndexRepository.findBySource(data[1]);
-//                            SourceIndex index = new SourceIndex();
-//
-//                            if(Objects.isNull(sourceIndex)){
-//                                index.setSource(data[1]);
-//                                sourceIndex = sourceIndexRepository.save(index);
-//                            }
-//                            path.setOrigin(sourceIndex.getIndex());
-//                            sourceIndex = sourceIndexRepository.findBySource(data[2]);
-//                            index = new SourceIndex();
-//                            if(Objects.isNull(sourceIndex)){
-//                                index.setSource(data[2]);
-//                                sourceIndex = sourceIndexRepository.save(index);
-//                            }
-//                            path.setDestination(sourceIndex.getIndex());
-//                            String trafficDelay = data[3].replace(",", ".");
-//                            path.setTrafficDelay(Double.valueOf(trafficDelay ));
-//                            paths.add(path);
-//                        }
-//                    }
-//                    count++;
-//                }
-//                pendingFile.setProcessStatus("processed");
-//                uploadFilesRepository.save(pendingFile);
-//                logger.info("Data Successfully saved");
-//
-//
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//        });
-//    }
 
-//    List<SourceIndex> tempStudentList = new ArrayList<>();
-//    XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-//    XSSFSheet worksheet = workbook.getSheetAt(0);
-
+    /**
+     * The scheduled task is responsible for getting files from the file directory and processing them;
+     * processing means persisting the file data to the database
+     */
+    @Scheduled(fixedDelay = 5L)
     public void processFile(){
         uploadFilesRepository.findByProcessStatus("pending").forEach(pendingFile->{
             try {
@@ -108,7 +67,7 @@ public class ProcessFileService {
                 InputStream input = new FileInputStream(file);
                 XSSFWorkbook workbook = new XSSFWorkbook(input);
                 processPlanetNames(workbook.getSheetAt(0));
-                ProcessRoutes(workbook.getSheetAt(1),workbook.getSheetAt(2) );
+                ProcessRoutes(workbook.getSheetAt(1),workbook.getSheetAt(2));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -119,24 +78,20 @@ public class ProcessFileService {
             logger.info("Data Successfully saved");
         });
     }
-//    private  boolean checkIfPathExist(String[] data){
-//        SourceIndex sourceIndex1 = sourceIndexRepository.findBySource(data[1]);
-//        SourceIndex sourceIndex2 = sourceIndexRepository.findBySource(data[2]);
-//        if(Objects.isNull(sourceIndex1) || Objects.isNull(sourceIndex2)){
-//            return  true;
-//        }
-//        Path path = pathRepository.findByOriginAndDestination(sourceIndex1.getIndex(),sourceIndex2.getIndex());
-//         if(Objects.nonNull(path)){
-//            return  false;
-//        }
-//       return  true;
-//    }
 
+
+    /**
+     *  While designing this class the assumption is that the files are formatted in the correct
+     *  way, the function below is responsible for ensuring that while we process the files
+     *  we do no not duplicate persisted data.
+     * @param row
+     * @return
+     */
     private  boolean checkIfPathIsSaveExcel(XSSFRow row){
         SourceIndex sourceIndex1 = sourceIndexRepository.findBySource(row.getCell(1).getStringCellValue());
         SourceIndex sourceIndex2 = sourceIndexRepository.findBySource(row.getCell(2).getStringCellValue());
         if(Objects.isNull(sourceIndex1) || Objects.isNull(sourceIndex2)){
-            return  true;
+            return  false;
         }
         Path path = pathRepository.findByOriginAndDestination(sourceIndex1.getIndex(),sourceIndex2.getIndex());
         if(Objects.nonNull(path)){
@@ -147,39 +102,60 @@ public class ProcessFileService {
     }
 
 
+    /**
+     *
+     * The function process the initial table of the excel files and this is kept as a reference.
+     * @param worksheet
+     */
 
     private void processPlanetNames(XSSFSheet worksheet){
         List<SourceIndex> sourceIndices = new ArrayList<>();
         for(int itr=1;itr<worksheet.getPhysicalNumberOfRows() ;itr++) {
             SourceIndex sourceIndex = new SourceIndex();
             XSSFRow row = worksheet.getRow(itr);
-
-            sourceIndex.setSource(row.getCell(0).getStringCellValue());
-            sourceIndex.setCountryName(row.getCell(1).getStringCellValue());
-            sourceIndices.add(sourceIndex);
+            SourceIndex src = sourceIndexRepository.findBySource(row.getCell(0).getStringCellValue());
+            if(Objects.isNull(src)) {
+                sourceIndex.setSource(row.getCell(0).getStringCellValue());
+                sourceIndex.setCountryName(row.getCell(1).getStringCellValue());
+                sourceIndices.add(sourceIndex);
+            }
         }
-        sourceIndexRepository.saveAll(sourceIndices);
+        if(sourceIndices.size() >0){
+            sourceIndexRepository.saveAll(sourceIndices);
+        }
     }
+
+    /**
+     *
+     * The function is responsible for processing 2nd and 3rd tables.
+     * The path are stored as integer e.g path from A to B is stored as 1 to 2
+     * 1 is reference to A in the plane name table and 2 is reference to b, and
+     * so on. The reason for this is because it is easy to actually traverse numbers
+     * when dealing with graphs.
+     * @param worksheet
+     * @param worksheet2
+     */
 
     private void ProcessRoutes(XSSFSheet worksheet,XSSFSheet worksheet2 ){
         List<Path> paths = new ArrayList<>();
         for(int itr=1;itr<worksheet.getPhysicalNumberOfRows() ;itr++) {
             Path path = new Path();
             XSSFRow row = worksheet.getRow(itr);
-            XSSFRow row2 = worksheet.getRow(itr);
+            XSSFRow row2 = worksheet2.getRow(itr);
 
-            if(checkIfPathIsSaveExcel(row)) {
-                Integer src = sourceIndexRepository.findBySource(row.getCell(1).getStringCellValue()).getIndex();
-                Integer des = sourceIndexRepository.findBySource(row.getCell(2).getStringCellValue()).getIndex();
-                String distance = (row.getCell(3).getErrorCellString()).replace(",", ".");
-                String traffic = (row2.getCell(3).getErrorCellString()).replace(",", ".");
+            if(checkIfPathIsSaveExcel(row)){
 
-                path.setOrigin(src);
-                path.setDestination(des);
-                path.setDistance(Double.valueOf(distance));
-                path.setTrafficDelay(Double.valueOf(traffic));
+                String origin = row.getCell(1).getStringCellValue();
+                String destination = row.getCell(2).getStringCellValue();
+                    SourceIndex src = sourceIndexRepository.findBySource(origin);
+                    SourceIndex des = sourceIndexRepository.findBySource(destination);
+                     path.setOrigin(src.getIndex());
+                     path.setDestination(des.getIndex());
+                    path.setDistance(row.getCell(3).getNumericCellValue());
+                    path.setTrafficDelay(row2.getCell(3).getNumericCellValue());
+                    paths.add(path);
             }
-            paths.add(path);
+
         }
         pathRepository.saveAll(paths);
     }

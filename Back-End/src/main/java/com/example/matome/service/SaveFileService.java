@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -37,8 +38,12 @@ public class SaveFileService {
 
     public ResponseEntity<Object> saveFile(MultipartFile file, String fileName) throws IOException {
         byte[] bytes = file.getBytes();
-         Path path = Paths.get(environmentConfig.getFileDirectory().concat("/ma2me"), file.getOriginalFilename());
-         Files.write(path, bytes);
+        String filePath = environmentConfig.getFileDirectory().concat("/ma2me/");
+        File directory = new File(filePath);
+        if(!directory.exists()){ directory.mkdirs();}
+
+        Path path = Paths.get(environmentConfig.getFileDirectory().concat("/ma2me"), file.getOriginalFilename());
+        Files.write(path, bytes);
         UploadedFiles  fileMETA = new UploadedFiles();
         fileMETA.setProcessStatus("pending");
         fileMETA.setFileName(fileName);
@@ -50,7 +55,6 @@ public class SaveFileService {
 
     public ResponseEntity<Object> getSavedPaths() {
         List<SourceIndex> paths = sourceIndexRepository.findAll();
-        logger.info(""+paths);
         return ResponseHandler.generateResponse(HttpStatus.OK, true, "Available Paths", paths);
     }
 
