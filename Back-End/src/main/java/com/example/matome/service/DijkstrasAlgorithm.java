@@ -67,7 +67,7 @@ public class DijkstrasAlgorithm {
 
 
     private void init(){
-
+            desiredShortestPath = new ArrayList<>();
             List<PlanetName> planetNameList = planetNameRepository.findAll();
             int dimensions = planetNameList.size()+1;
 
