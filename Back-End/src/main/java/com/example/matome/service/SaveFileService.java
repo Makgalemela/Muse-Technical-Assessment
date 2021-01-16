@@ -2,9 +2,9 @@ package com.example.matome.service;
 
 
 import com.example.matome.configs.EnvironmentConfigImpl;
-import com.example.matome.domain.SourceIndex;
+import com.example.matome.domain.PlanetName;
 import com.example.matome.domain.UploadedFiles;
-import com.example.matome.repository.SourceIndexRepository;
+import com.example.matome.repository.PlanetNameRepository;
 import com.example.matome.repository.uploadFilesRepository;
 import com.example.matome.utils.ResponseHandler;
 import org.slf4j.Logger;
@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,7 +33,7 @@ public class SaveFileService {
     @Autowired
     uploadFilesRepository  repository;
     @Autowired
-    SourceIndexRepository sourceIndexRepository;
+    PlanetNameRepository planetNameRepository;
 
     public ResponseEntity<Object> saveFile(MultipartFile file, String fileName) throws IOException {
         byte[] bytes = file.getBytes();
@@ -54,7 +53,7 @@ public class SaveFileService {
 
 
     public ResponseEntity<Object> getSavedPaths() {
-        List<SourceIndex> paths = sourceIndexRepository.findAll();
+        List<PlanetName> paths = planetNameRepository.findAll();
         return ResponseHandler.generateResponse(HttpStatus.OK, true, "Available Paths", paths);
     }
 

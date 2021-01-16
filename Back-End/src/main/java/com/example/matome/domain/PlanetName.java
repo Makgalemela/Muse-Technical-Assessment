@@ -6,21 +6,21 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-public class SourceIndex {
+public class PlanetName {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Integer index;
     private String source;
-    private String CountryName;
+    private String planetName;
 
-    public String getCountryName() {
-        return CountryName;
+    public String getPlanetName() {
+        return planetName;
     }
 
-    public void setCountryName(String countryName) {
-        CountryName = countryName;
+    public void setPlanetName(String PlanetName) {
+        PlanetName = PlanetName;
     }
 
     public Integer getIndex() {

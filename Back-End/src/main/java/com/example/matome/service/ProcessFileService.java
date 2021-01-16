@@ -3,9 +3,9 @@ package com.example.matome.service;
 
 import com.example.matome.configs.EnvironmentConfigImpl;
 import com.example.matome.domain.Path;
-import com.example.matome.domain.SourceIndex;
+import com.example.matome.domain.PlanetName;
 import com.example.matome.domain.UploadedFiles;
-import com.example.matome.repository.SourceIndexRepository;
+import com.example.matome.repository.PlanetNameRepository;
 import com.example.matome.repository.pathRepository;
 import com.example.matome.repository.uploadFilesRepository;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -46,7 +46,7 @@ public class ProcessFileService {
     pathRepository pathRepository;
 
     @Autowired
-    SourceIndexRepository sourceIndexRepository;
+    PlanetNameRepository planetNameRepository;
 
 
     public File getFileByName(UploadedFiles uploadedFiles) throws FileNotFoundException {
@@ -88,12 +88,12 @@ public class ProcessFileService {
      * @return
      */
     private  boolean checkIfPathIsSaveExcel(XSSFRow row){
-        SourceIndex sourceIndex1 = sourceIndexRepository.findBySource(row.getCell(1).getStringCellValue());
-        SourceIndex sourceIndex2 = sourceIndexRepository.findBySource(row.getCell(2).getStringCellValue());
-        if(Objects.isNull(sourceIndex1) || Objects.isNull(sourceIndex2)){
+        PlanetName planetName1 = planetNameRepository.findBySource(row.getCell(1).getStringCellValue());
+        PlanetName planetName2 = planetNameRepository.findBySource(row.getCell(2).getStringCellValue());
+        if(Objects.isNull(planetName1) || Objects.isNull(planetName2)){
             return  false;
         }
-        Path path = pathRepository.findByOriginAndDestination(sourceIndex1.getIndex(),sourceIndex2.getIndex());
+        Path path = pathRepository.findByOriginAndDestination(planetName1.getIndex(), planetName2.getIndex());
         if(Objects.nonNull(path)){
             return  false;
         }
@@ -109,19 +109,19 @@ public class ProcessFileService {
      */
 
     private void processPlanetNames(XSSFSheet worksheet){
-        List<SourceIndex> sourceIndices = new ArrayList<>();
+        List<PlanetName> sourceIndices = new ArrayList<>();
         for(int itr=1;itr<worksheet.getPhysicalNumberOfRows() ;itr++) {
-            SourceIndex sourceIndex = new SourceIndex();
+            PlanetName planetName = new PlanetName();
             XSSFRow row = worksheet.getRow(itr);
-            SourceIndex src = sourceIndexRepository.findBySource(row.getCell(0).getStringCellValue());
+            PlanetName src = planetNameRepository.findBySource(row.getCell(0).getStringCellValue());
             if(Objects.isNull(src)) {
-                sourceIndex.setSource(row.getCell(0).getStringCellValue());
-                sourceIndex.setCountryName(row.getCell(1).getStringCellValue());
-                sourceIndices.add(sourceIndex);
+                planetName.setSource(row.getCell(0).getStringCellValue());
+                planetName.setPlanetName(row.getCell(1).getStringCellValue());
+                sourceIndices.add(planetName);
             }
         }
         if(sourceIndices.size() >0){
-            sourceIndexRepository.saveAll(sourceIndices);
+            planetNameRepository.saveAll(sourceIndices);
         }
     }
 
@@ -147,8 +147,8 @@ public class ProcessFileService {
 
                 String origin = row.getCell(1).getStringCellValue();
                 String destination = row.getCell(2).getStringCellValue();
-                    SourceIndex src = sourceIndexRepository.findBySource(origin);
-                    SourceIndex des = sourceIndexRepository.findBySource(destination);
+                    PlanetName src = planetNameRepository.findBySource(origin);
+                    PlanetName des = planetNameRepository.findBySource(destination);
                      path.setOrigin(src.getIndex());
                      path.setDestination(des.getIndex());
                     path.setDistance(row.getCell(3).getNumericCellValue());

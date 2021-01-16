@@ -2,10 +2,10 @@ package com.example.matome.service;
 
 
 import com.example.matome.domain.Path;
-import com.example.matome.domain.SourceIndex;
+import com.example.matome.domain.PlanetName;
 import com.example.matome.dto.searchRequest;
 import com.example.matome.dto.searchResponse;
-import com.example.matome.repository.SourceIndexRepository;
+import com.example.matome.repository.PlanetNameRepository;
 import com.example.matome.repository.pathRepository;
 import com.example.matome.utils.ResponseHandler;
 import org.slf4j.Logger;
@@ -54,7 +54,7 @@ public class DijkstrasAlgorithm {
     pathRepository pathRepository;
 
     @Autowired
-    SourceIndexRepository sourceIndexRepository;
+    PlanetNameRepository planetNameRepository;
 
 
     /**
@@ -68,8 +68,8 @@ public class DijkstrasAlgorithm {
 
     private void init(){
 
-            List<SourceIndex> sourceIndexList = sourceIndexRepository.findAll();
-            int dimensions = sourceIndexList.size()+1;
+            List<PlanetName> planetNameList = planetNameRepository.findAll();
+            int dimensions = planetNameList.size()+1;
 
             graph = new Double[dimensions][dimensions];
 
@@ -170,8 +170,8 @@ public class DijkstrasAlgorithm {
     private void computePath(Integer vertex, int [] parents){
         if(vertex == NO_PARENT){return;}
         computePath(parents[vertex],parents);
-        SourceIndex sourceIndex = sourceIndexRepository.findByIndex(vertex);
-        desiredShortestPath.add(sourceIndex.getCountryName());
+        PlanetName planetName = planetNameRepository.findByIndex(vertex);
+        desiredShortestPath.add(planetName.getPlanetName());
     }
 
 
@@ -182,8 +182,8 @@ public class DijkstrasAlgorithm {
      * @return
      */
     public ResponseEntity<Object> findShortestPath(searchRequest req){
-        SourceIndex source = sourceIndexRepository.findBySource(req.getOrigin());
-        SourceIndex des = sourceIndexRepository.findBySource(req.getDestination());
+        PlanetName source = planetNameRepository.findByPlanetName(req.getOrigin());
+        PlanetName des = planetNameRepository.findByPlanetName(req.getDestination());
 
         if(Objects.isNull(source) || Objects.isNull(des)){
             return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, true, "Path Does not exist", null);
@@ -191,10 +191,9 @@ public class DijkstrasAlgorithm {
             searchResponse res = new searchResponse();
             init();
             dijkstra(source.getIndex());
-
             computePath(des.getIndex(), parents);
-            res.setOrigin(source.getCountryName());
-            res.setDestination(des.getCountryName());
+            res.setOrigin(source.getPlanetName());
+            res.setDestination(des.getPlanetName());
             res.setDistance(String.valueOf(shortestDistances[des.getIndex()]));
             res.setPath(desiredShortestPath);
             return ResponseHandler.generateResponse(HttpStatus.EXPECTATION_FAILED, true, "Successfully Found the path", res);
