@@ -3,8 +3,8 @@ package com.example.matome.service;
 
 import com.example.matome.domain.Path;
 import com.example.matome.domain.PlanetName;
-import com.example.matome.dto.searchRequest;
-import com.example.matome.dto.searchResponse;
+import com.example.matome.dto.GetShortestPathRequest;
+import com.example.matome.dto.GetShortestPathResponse;
 import com.example.matome.repository.PlanetNameRepository;
 import com.example.matome.repository.pathRepository;
 import com.example.matome.utils.ResponseHandler;
@@ -199,20 +199,14 @@ public class DijkstrasAlgorithm {
      * @param req
      * @return
      */
-    public ResponseEntity<Object> findShortestPath(searchRequest req){
+    public GetShortestPathResponse findShortestPath(GetShortestPathRequest req){
         PlanetName ori = planetNameRepository.findByPlanetName(req.getOrigin());
         PlanetName des = planetNameRepository.findByPlanetName(req.getDestination());
 
         if(Objects.isNull(ori) || Objects.isNull(des)){
-            String message = null;
-            if(planetNameRepository.findAll().size() == 0){
-                message = "Please upload the document that contain paths.";
-            }else{
-                message = "The path you are looking for does not exist";
-            }
-            return ResponseHandler.generateResponse(HttpStatus.OK, false, message, null);
+            return  null;
         }else {
-            searchResponse res = new searchResponse();
+            GetShortestPathResponse res = new GetShortestPathResponse();
             init(req.getTrafficInfo());
             dijkstra(ori.getIndex());
             computePath(des.getIndex(), parents);
@@ -220,7 +214,7 @@ public class DijkstrasAlgorithm {
             res.setDestination(des.getPlanetName());
             res.setDistance(String.valueOf(shortestDistances[des.getIndex()]));
             res.setPath(desiredShortestPath);
-            return ResponseHandler.generateResponse(HttpStatus.OK, true, "Successfully Found the path", res);
+            return  res;
 
         }
     }

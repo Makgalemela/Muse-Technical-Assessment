@@ -9,6 +9,7 @@
 // Angular
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CompRefreshService } from '../../../../core/index';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,11 +19,11 @@ import { RouterOutlet } from '@angular/router';
 export class DashboardComponent implements OnInit {
   @ViewChild(RouterOutlet ,{static:false}) outlet: RouterOutlet;
 
-  constructor() {
-   }
+  constructor(public toggle : CompRefreshService) { }
 
    appName : String = "Shortest Path From Point to Point"
   ngOnInit() {
   }
+  
 
 }

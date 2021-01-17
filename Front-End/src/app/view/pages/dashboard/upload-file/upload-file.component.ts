@@ -8,7 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HttpPathService } from 'src/app/core';
+import { CompRefreshService, HttpPathService } from '../../../../core/index';
 
 @Component({
   selector: 'app-upload-file',
@@ -17,7 +17,7 @@ import { HttpPathService } from 'src/app/core';
 })
 export class UploadFileComponent implements OnInit {
 
-  constructor(private httpServive : HttpPathService) {}
+  constructor(private httpServive : HttpPathService ,  public toggle : CompRefreshService) {}
 
   fileToUpload: File = null;
 
@@ -35,7 +35,7 @@ export class UploadFileComponent implements OnInit {
     formData.append('fileName',  this.fileToUpload.name);
     this.httpServive.uploadFile(formData)
     .subscribe((res)=>{
-        this.uploaded = !this.uploaded;
+        this.toggle.hideUpload();
         this.response$.next(res.message)
     })
   }

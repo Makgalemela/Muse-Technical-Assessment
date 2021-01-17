@@ -13,7 +13,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 import { of } from "rxjs/internal/observable/of";
 import { map, startWith } from "rxjs/operators";
-import { HttpPathService, SearchFormService } from "src/app/core";
+import { CompRefreshService, HttpPathService, SearchFormService } from "../../../../core/index";
 
 export interface ResultSet {
   Origin: string;
@@ -28,15 +28,13 @@ export interface ResultSet {
 })
 export class DetailViewComponent implements OnInit {
   options: string[] = [];
-  checked = false;
 
-
-  origin: String = "Johannesburg";
-  destination: String = "Cape Town";
-  distance: String = "1234495432212134 km";
+  // origin: String = "Johannesburg";
+  // destination: String = "Cape Town";
+  // distance: String = "";
   constructor(
     private Forms: SearchFormService,
-    private httpServive: HttpPathService
+    private httpServive: HttpPathService,
   ) {}
 
   form: FormGroup = this.Forms.emailForm;
@@ -77,7 +75,6 @@ export class DetailViewComponent implements OnInit {
 
   findShortestPath() {
     this.results$.next(false);
-    console.log(this.form.value)
     this.httpServive.shortestPath(this.form.value).subscribe((res) => {
       if(res.isSuccess){
         this.results$.next(res.data);

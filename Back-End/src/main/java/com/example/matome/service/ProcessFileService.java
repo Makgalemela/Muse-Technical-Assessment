@@ -49,6 +49,10 @@ public class ProcessFileService {
     PlanetNameRepository planetNameRepository;
 
 
+    @Autowired
+    SaveFileService saveFileService;
+
+
     public File getFileByName(UploadedFiles uploadedFiles) throws FileNotFoundException {
         File file = new File(environmentConfig.getFileDirectory().concat("/ma2me/"+uploadedFiles.getFileName()));
         return  file;
@@ -64,6 +68,7 @@ public class ProcessFileService {
         uploadFilesRepository.findByProcessStatus("pending").forEach(pendingFile->{
             try {
                 File file = getFileByName(pendingFile);
+
                 InputStream input = new FileInputStream(file);
                 XSSFWorkbook workbook = new XSSFWorkbook(input);
                 processPlanetNames(workbook.getSheetAt(0));
@@ -75,7 +80,12 @@ public class ProcessFileService {
             }
             pendingFile.setProcessStatus("processed");
             uploadFilesRepository.save(pendingFile);
-            logger.info("Data Successfully saved");
+            logger.info("Data Processed saved");
+            try {
+                saveFileService.moveFile(getFileByName(pendingFile));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
     }
 

@@ -9,7 +9,7 @@ export class SearchFormService {
   emailForm : FormGroup = this.fb.group({
     origin : '',
     destination : '',
-    trafficInfo : ''
+    trafficInfo : false
   })
 
   resetForm(){

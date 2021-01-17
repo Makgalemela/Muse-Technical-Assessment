@@ -1,6 +1,6 @@
 #### Stage 1: Build the application
-#FROM adoptopenjdk/openjdk11
-FROM maven:3.6.0-jdk-11-slim AS build
+FROM openjdk:11.0.6-jre-slim AS build
+
 # Set the current working directory inside the image
 WORKDIR /app
 
@@ -11,24 +11,22 @@ COPY .mvn .mvn
 # Copy the pom.xml file
 COPY pom.xml .
 
-# Build all the dependencies in preparation to go offline.
-# This is a separate step so the dependencies will be cached unless
-# the pom.xml file has changed.
 
 #RUN dos2unix mvnw
 
-# RUN ./mvnw dependency:go-offline -B
+RUN ./mvnw dependency:go-offline -B
 
 # Copy the project source
 COPY src src
 
-# Package the application
-RUN ./mvnw package -DskipTests
+# Package the application without downloading dependacies
+RUN ./mvnw clean package -DskipTests
+# build the app (no dependency download here)
+#RUN --mount=type=cache,target=/root/.m2  ./mvnw clean package -Dmaven.test.skip
+
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 #### Stage 2: A minimal docker image with command to run the app
-#FROM openjdk:8-jre-alpine
-#FROM adoptopenjdk/openjdk11:alpine-jre
 FROM openjdk:11-jre-slim
 
 ARG DEPENDENCY=/app/target/dependency

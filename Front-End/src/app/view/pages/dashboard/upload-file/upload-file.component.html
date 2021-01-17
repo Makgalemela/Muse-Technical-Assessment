@@ -1,4 +1,4 @@
-<form action="" *ngIf="!uploaded">
+<form action="" *ngIf="toggle.getToggleStatus()">
     <input class="form-control form-control-lg" id="formFileLg" type="file" (change)="handleFileInput($event.target.files)" />
     <div class=" container ">
         <div class="row mat-submit justify-content-end ">
@@ -6,7 +6,7 @@
         </div>
     </div>
 </form>
-<div class="container " *ngIf="uploaded ">
+<div class="container " *ngIf="!(toggle.getToggleStatus())">
     <div class="row ">
         <div class="col ">
             <h1>
