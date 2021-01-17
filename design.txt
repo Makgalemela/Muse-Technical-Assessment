@@ -21,17 +21,22 @@ mvn clean spring-boot:run   or  java -jar target/ matome-0.0.1-SNAPSHOT.jar
 •	Expose the algorithm using a Document Literal Web service, was not done, I only exposed the request document which was be found http://localhost:8001/ws/shortest.wsdl the reason for this is because I have little knowledge of SOAP and xsd, with little time, a week of I could actually implement it all.
 Front-end
 Run the following commands:
-•	npm install
+•	npm install --save
 •	ng serve 
 For running front end alternatively, you can run:
-•	npm install
+•	npm install --save
 •	ng build –prod
+
+* The above give error delete node_module folder and re-run the commants
 The last command will generate a dist folder in root directory of Front-End which can be thrown behind nginx server. (I have actually provided a dist folder in case something goes wrong)
 
 Run time assumption
 •	 The person executing java source code has the java 11 runtime environment correctly installed and nodejs v12.19.0.
 
 Disclaimer:  Docker configuration is not finished because as it was not requirement, but I am more than willing to provide the complete docker configuration and images.
+
+
+One technical issue is that this particular repo has multiple contributors and this is because I work on different GitHub accounts and when I commit to them I need to correctly use username, in this case I just forgot to actual change them. I could have git rebase -i commit_hash but I see no need. I am more open to discussing this project.
 
 
 
