@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Jan 17 21:53:33 CAT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0177-11e8-e8d8-000008973690 
+Wed Jan 20 16:50:43 CAT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0177-2046-b849-000008b0d3d8 
 on database directory memory:C:\Users\schroodinger\Desktop\MuseTechNicalAssesment\Back-End\ma2me with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2cdf8d8a 
 Loaded from file:/C:/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Oracle Corporation

@@ -82,6 +82,7 @@ public class DijkstrasAlgorithm {
             for(int itr = 0 ; itr< dimensions ; itr++){
                 for(int itc = 0 ; itc < dimensions ; itc++){
                     graph[itr][itc] =  0.0;
+
                 }
             }
 
@@ -113,7 +114,6 @@ public class DijkstrasAlgorithm {
             }else{
                 graph[path.getDestination()][path.getOrigin()] = distance;
                 graph[path.getOrigin()][path.getDestination()] = distance;
-
             }
 
         }
