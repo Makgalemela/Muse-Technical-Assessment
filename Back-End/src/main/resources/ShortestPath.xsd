@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://ma2me.com/shortest"
-xmlns:tns="http://ma2me.com/shortest">
+           targetNamespace="http://ma2me.com/shortest"
+           xmlns:tns="http://ma2me.com/shortest">
     <xs:element name="GetShortestPathResponse">
         <xs:complexType>
             <xs:sequence>
@@ -13,7 +13,7 @@ xmlns:tns="http://ma2me.com/shortest">
     <xs:element name="GetShortestPathRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="shortestPathRequest" type="tns:shortestPathRequest" />
+                <xs:element name="shortestPathRequest" type="tns:shortestPathRequest"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -28,9 +28,16 @@ xmlns:tns="http://ma2me.com/shortest">
 
     <xs:complexType name="shortestPathResponse">
         <xs:sequence>
-            <xs:element name="distance" type="xs:boolean"/>
+            <xs:element name="distance" type="xs:string"/>
             <xs:element name="origin" type="xs:string"/>
             <xs:element name="destination" type="xs:string"/>
+            <xs:element name="path" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="item" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

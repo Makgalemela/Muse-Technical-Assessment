@@ -5,8 +5,8 @@ com\ma2me\shortest\ShortestPathRequest.class
 com\example\matome\repository\pathRepository.class
 com\example\matome\controller\fileController.class
 com\example\matome\configs\UrlConstant.class
+com\example\matome\dto\GetShortestPathRequests.class
 com\example\matome\utils\ResponseHandler.class
-com\ma2me\shortest\ShortestPathDetails.class
 com\example\matome\webServiceEndpoints\ShortestPath.class
 com\example\matome\configs\SwaggerConfig.class
 com\ma2me\shortest\ShortestPathResponse.class
@@ -17,12 +17,12 @@ com\example\matome\configs\EnvironmentConfigImpl.class
 com\example\matome\configs\WebServiceConfig.class
 com\ma2me\shortest\GetShortestPathResponse.class
 com\example\matome\repository\uploadFilesRepository.class
+com\example\matome\dto\GetShortestPathResponses.class
 com\example\matome\configs\EnvironmentConfig.class
 com\example\matome\service\SaveFileService.class
 com\ma2me\shortest\GetShortestPathRequest.class
 com\example\matome\domain\Path.class
 com\example\matome\service\DijkstrasAlgorithm.class
-com\example\matome\dto\GetShortestPathRequest.class
-com\example\matome\dto\GetShortestPathResponse.class
 com\ma2me\shortest\ObjectFactory.class
+com\ma2me\shortest\ShortestPathResponse$Path.class
 com\example\matome\domain\UploadedFiles.class

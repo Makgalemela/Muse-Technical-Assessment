@@ -3,16 +3,13 @@ package com.example.matome.service;
 
 import com.example.matome.domain.Path;
 import com.example.matome.domain.PlanetName;
-import com.example.matome.dto.GetShortestPathRequest;
-import com.example.matome.dto.GetShortestPathResponse;
+import com.example.matome.dto.GetShortestRouteRequest;
+import com.example.matome.dto.GetShortestRouteResponses;
 import com.example.matome.repository.PlanetNameRepository;
 import com.example.matome.repository.pathRepository;
-import com.example.matome.utils.ResponseHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -185,14 +182,14 @@ public class DijkstrasAlgorithm {
      * @param req
      * @return
      */
-    public GetShortestPathResponse findShortestPath(GetShortestPathRequest req) {
+    public GetShortestRouteResponses findShortestPath(GetShortestRouteRequest req) {
         PlanetName ori = planetNameRepository.findByPlanetName(req.getOrigin());
         PlanetName des = planetNameRepository.findByPlanetName(req.getDestination());
 
         if (Objects.isNull(ori) || Objects.isNull(des)) {
             return null;
         } else {
-            GetShortestPathResponse res = new GetShortestPathResponse();
+            GetShortestRouteResponses res = new GetShortestRouteResponses();
             init(req.getTrafficInfo());
             dijkstra(ori.getIndex());
             computePath(des.getIndex(), parents);

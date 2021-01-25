@@ -1,15 +1,14 @@
 package com.example.matome.controller;
 
 
-import com.example.matome.dto.GetShortestPathRequest;
-import com.example.matome.dto.GetShortestPathResponse;
+import com.example.matome.dto.GetShortestRouteRequest;
+import com.example.matome.dto.GetShortestRouteResponses;
 import com.example.matome.service.DijkstrasAlgorithm;
 import com.example.matome.utils.ResponseHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,9 +32,9 @@ public class shortestPathController {
 
 
     @PostMapping(value= GET_SHORTEST_PATH)
-    public ResponseEntity<Object> shortestPath(@RequestBody GetShortestPathRequest request) {
+    public ResponseEntity<Object> shortestPath(@RequestBody GetShortestRouteRequest request) {
 
-        GetShortestPathResponse response = dijkstrasAlgorithm.findShortestPath(request);
+        GetShortestRouteResponses response = dijkstrasAlgorithm.findShortestPath(request);
          String message = null;
          HttpStatus status =HttpStatus.OK ;
          boolean successStatus = true;

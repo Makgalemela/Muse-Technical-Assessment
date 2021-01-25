@@ -23,6 +23,7 @@ public class WebServiceConfig {
         MessageDispatcherServlet messageDispatcherServlet = new MessageDispatcherServlet();
         messageDispatcherServlet.setApplicationContext(context);
         messageDispatcherServlet.setTransformSchemaLocations(true);
+        messageDispatcherServlet.setTransformWsdlLocations(true);
         return  new ServletRegistrationBean(messageDispatcherServlet, "/ws/*");
     }
 
