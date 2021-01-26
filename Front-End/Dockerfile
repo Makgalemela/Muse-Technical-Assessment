@@ -45,7 +45,9 @@ COPY . /app
 # RUN ng e2e --port 4202
 
 # generate build
-RUN ng build --prod --output-path=dist
+RUN ng build --prod --output-path=
+
+
 
 
 ############
@@ -59,9 +61,12 @@ RUN ng build --prod --output-path=dist
 FROM nginx:1.16.0-alpine
 
 # copy artifact build from the 'build environment'
-COPY --from=build /app/dist /usr/share/nginx/html/krysznatec-main
-                                                  
+ COPY --from=build /app/dist /var/www
 
+
+ COPY nginx.conf /etc/nginx/nginx.conf
+
+                                                  
 # expose port 80
 # EXPOSE 80
 
