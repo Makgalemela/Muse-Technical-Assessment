@@ -1,4 +1,4 @@
-com\example\matome\domainTests\planetNamesTests.class
-com\example\matome\controllerTests\shortestPathIntegrationTests.class
-com\example\matome\domainTests\pathTests.class
-com\example\matome\ApplicationTests.class
+com/example/matome/domainTests/pathTests.class
+com/example/matome/controllerTests/shortestPathIntegrationTests.class
+com/example/matome/ApplicationTests.class
+com/example/matome/domainTests/planetNamesTests.class

@@ -11,18 +11,18 @@ services:
       context: Back-End # Use an image built from the specified dockerfile in the `polling-app-server` directory.
       dockerfile: Dockerfile
     ports:
-      - "8001:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+      - "8081:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: always
-   # depends_on: 
+   # depends_on:
     #  - db # This service depends on mysql. Start that first.
     environment: # Pass environment variables to the service
       SPRING_DATASOURCE_URL: jdbc:derby:memory:ma2me;create=true
-     
+
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
       - backend
       - frontend
 
-  # Frontend Service 
+  # Frontend Service
   app-client:
     build:
       context: Front-End # Use an image built from the specified dockerfile in the `polling-app-client` directory.
@@ -35,10 +35,10 @@ services:
     depends_on:
       - app-server
     networks:
-      - frontend  
+      - frontend
 
 
 # Networks to be created to facilitate communication between containers
 networks:
   backend:
-  frontend:  
+  frontend:
