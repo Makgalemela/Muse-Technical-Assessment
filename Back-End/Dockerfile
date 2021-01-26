@@ -1,5 +1,7 @@
 #### Stage 1: Build the application
-FROM openjdk:11.0.6-jre-slim AS build
+FROM openjdk:8-jdk-alpine as build
+#FROM adoptopenjdk/openjdk11:x86_64-alpine-jdk-11.0.4_11 as packager
+
 
 # Set the current working directory inside the image
 WORKDIR /app
@@ -11,23 +13,24 @@ COPY .mvn .mvn
 # Copy the pom.xml file
 COPY pom.xml .
 
+# Build all the dependencies in preparation to go offline. 
+# This is a separate step so the dependencies will be cached unless 
+# the pom.xml file has changed.
 
 #RUN dos2unix mvnw
 
-RUN ./mvnw dependency:go-offline -B
+# RUN ./mvnw dependency:go-offline -B
 
 # Copy the project source
 COPY src src
 
-# Package the application without downloading dependacies
-RUN ./mvnw clean package -DskipTests
-# build the app (no dependency download here)
-#RUN --mount=type=cache,target=/root/.m2  ./mvnw clean package -Dmaven.test.skip
-
+# Package the application
+RUN ./mvnw package -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-#### Stage 2: A minimal docker image with command to run the app
-FROM openjdk:11-jre-slim
+#### Stage 2: A minimal docker image with command to run the app 
+FROM openjdk:8-jre-alpine
+
 
 ARG DEPENDENCY=/app/target/dependency
 
@@ -35,5 +38,6 @@ ARG DEPENDENCY=/app/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+
 
 ENTRYPOINT ["java","-cp","app:app/lib/*","com.example.matome.Application"]

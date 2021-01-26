@@ -1,4 +1,3 @@
-
 #############
 ### build ###
 #############
@@ -7,16 +6,16 @@
 FROM node:12.20.0 as build
 
 # install chrome for protractor tests
-# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-# RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-# RUN apt-get update && apt-get install -yq google-chrome-stable
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+RUN apt-get update && apt-get install -yq google-chrome-stable
 
 
 # Manual instalation of  node / npm 
 
-# RUN apt-get update && apt-get install -y curl
-# RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-# RUN apt-get update && apt-get install -y nodejs
+RUN apt-get update && apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get update && apt-get install -y nodejs
 
 
 # set working directory
@@ -45,10 +44,6 @@ COPY . /app
 # RUN ng test --watch=false
 # RUN ng e2e --port 4202
 
-# Arguments
-#ARG BACKEND_API_URL
-#ENV BACKEND_API_URL=${BACKEND_API_URL}
-
 # generate build
 RUN ng build --prod --output-path=dist
 
@@ -64,7 +59,7 @@ RUN ng build --prod --output-path=dist
 FROM nginx:1.16.0-alpine
 
 # copy artifact build from the 'build environment'
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html/krysznatec-main
                                                   
 
 # expose port 80
